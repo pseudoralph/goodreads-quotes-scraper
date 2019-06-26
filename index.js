@@ -2,6 +2,7 @@ const cheerio = require('cheerio');
 const axios = require('axios');
 const baseUrl = 'https://www.goodreads.com';
 const query = 'programming';
+const limitFloor = 99;
 
 const quotesDb = [];
 
@@ -34,7 +35,10 @@ const recursively = (url = `${baseUrl}/quotes/tag/${query}`) => {
           });
         });
 
-        if (!$('.next_page').hasClass('disabled')) {
+        if (
+          !$('.next_page').hasClass('disabled') &&
+          quotesDb.length < limitFloor
+        ) {
           return Promise.resolve(baseUrl + $('.next_page').attr('href'));
         } else {
           return new Promise.reject('done');
