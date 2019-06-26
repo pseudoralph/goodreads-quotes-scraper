@@ -1,37 +1,52 @@
-// https://www.digitalocean.com/community/tutorials/how-to-use-node-js-request-and-cheerio-to-set-up-simple-web-scraping
-
 const cheerio = require('cheerio');
-const request = require('request');
+const axios = require('axios');
 const baseUrl = 'https://www.goodreads.com';
 const query = 'programming';
-const url = `${baseUrl}/quotes/tag/${query}`;
 
 const quotesDb = [];
 
-request(url, (err, response, html) => {
-  if (!err && response.statusCode === 200) {
-    const $ = cheerio.load(html);
-    const quoteContainers = $('.quoteDetails');
+const recursively = (url = `${baseUrl}/quotes/tag/${query}`) => {
+  axios
+    .get(url)
+    .then(response => {
+      if (response.status === 200) {
+        console.log('currently scraping: ' + url);
+        const $ = cheerio.load(response.data);
+        const quoteContainers = $('.quoteDetails');
 
-    quoteContainers.each((i, element) => {
-      quotesDb.push({
-        quote: $(element)
-          .find('.quoteText')
-          .text()
-          .replace(/\n\s*/gm, '')
-          .replace(/“|”|\n\s*|―.*$/g, '')
-          .replace(/\n/g, ' '),
-        author: $(element)
-          .find('.authorOrTitle')
-          .text()
-          .replace(/\n\s*/gm, ''),
-        url:
-          baseUrl +
-          $(element)
-            .find('a.smallText')
-            .attr('href')
-      });
+        quoteContainers.each((i, element) => {
+          quotesDb.push({
+            quote: $(element)
+              .find('.quoteText')
+              .text()
+              .replace(/\n\s*/gm, '')
+              .replace(/“|”|\n\s*|―.*$/g, '')
+              .replace(/\n/g, ' '),
+            author: $(element)
+              .find('.authorOrTitle')
+              .text()
+              .replace(/\n\s*/gm, ''),
+            url:
+              baseUrl +
+              $(element)
+                .find('a.smallText')
+                .attr('href')
+          });
+        });
+
+        if (!$('.next_page').hasClass('disabled')) {
+          return Promise.resolve(baseUrl + $('.next_page').attr('href'));
+        } else {
+          return new Promise.reject('done');
+        }
+      }
+    })
+    .then(url => {
+      recursively(url);
+    })
+    .catch(() => {
+      console.log(quotesDb.length + ' results delivered');
     });
-  }
-  console.log(quotesDb);
-});
+};
+
+recursively();
