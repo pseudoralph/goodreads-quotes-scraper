@@ -1,8 +1,8 @@
 const cheerio = require('cheerio');
 const axios = require('axios');
 const baseUrl = 'https://www.goodreads.com';
-const query = 'programming';
-const limitFloor = 99;
+const query = 'philosophy';
+const limitFloor = 30 * 10; // about 30 quotes per page
 
 const quotesDb = [];
 
@@ -39,17 +39,24 @@ const recursively = (url = `${baseUrl}/quotes/tag/${query}`) => {
           !$('.next_page').hasClass('disabled') &&
           quotesDb.length < limitFloor
         ) {
-          return Promise.resolve(baseUrl + $('.next_page').attr('href'));
+          return Promise.resolve({
+            continue: true,
+            payload: baseUrl + $('.next_page').attr('href')
+          });
         } else {
-          return new Promise.reject('done');
+          return Promise.resolve({ continue: false, payload: quotesDb });
         }
       }
     })
-    .then(url => {
-      recursively(url);
+    .then(response => {
+      if (response.continue) {
+        recursively(response.payload);
+      } else {
+        console.log(response.payload.length + ' quotes scraped');
+      }
     })
     .catch(() => {
-      console.log(quotesDb.length + ' results delivered');
+      console.log('error');
     });
 };
 
