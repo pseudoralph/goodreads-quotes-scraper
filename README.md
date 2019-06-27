@@ -2,7 +2,9 @@
 
 The Goodreads' API has several endpoints. An endpoint that delivers all quotes, however, is not one. This API fetches all quotes classified under a particular tag.
 
-This API uses [cheerio](https://cheerio.js.org/) to recursively scrape quote results pages and delievers a JSON file containing quotes, authors, and an attribution link. So making API calls this way is **very slllllooooowwww**.
+This API uses [cheerio](https://cheerio.js.org/) to recursively scrape quote results pages and delievers a JSON file containing quotes, authors, and an attribution link.
+
+Making API calls this way is **very slllllooooowwww**.
 
 ### Instructions
 
@@ -11,4 +13,7 @@ This API uses [cheerio](https://cheerio.js.org/) to recursively scrape quote res
 - start express server with `node index`
 - access `/quotes` endpoint
 
-Example: `https://localhost:3000/quotes?programming`
+Examples: `https://localhost:3000/quotes?programming` || `https://localhost:3000/quotes?humor` || `https://localhost:3000/quotes?time`
+
+Only the first query is acknoledged. All others are ignored.
+`/quotes?programming` **not** `quotes?programming&humor`
