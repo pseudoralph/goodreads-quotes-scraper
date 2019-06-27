@@ -13,7 +13,7 @@ Making API calls this way is **very slllllooooowwww**.
 - start express server with `node index`
 - access `/quotes` endpoint
 
-Examples: `https://localhost:3000/quotes?programming` || `https://localhost:3000/quotes?humor` || `https://localhost:3000/quotes?time`
+Example: `https://localhost:3000/quotes?programming`
 
 Only the first query is acknoledged. All others are ignored.
 `/quotes?programming` **not** `quotes?programming&humor`
