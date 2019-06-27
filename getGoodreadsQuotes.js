@@ -16,13 +16,11 @@ module.exports = getGoodreadsQuotes = (url, sessionData) => {
             quote: $(element)
               .find('.quoteText')
               .text()
-              .replace(/\n\s*/gm, '')
-              .replace(/“|”|\n\s*|―.*$/g, '')
-              .replace(/\n/g, ' '),
+              .replace(/―.*|\n\s*|“|”/gms, ''),
             author: $(element)
               .find('.authorOrTitle')
               .text()
-              .replace(/\n\s*/gm, ''),
+              .replace(/\n\s*|(,)\s*.*/gm, ''),
             url:
               baseUrl +
               $(element)
