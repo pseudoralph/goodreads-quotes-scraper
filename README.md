@@ -4,7 +4,7 @@ The Goodreads' API has several endpoints. An endpoint that delivers all quotes, 
 
 This API uses [cheerio](https://cheerio.js.org/) to recursively scrape quote results pages and delievers a JSON file containing quotes, authors, and an attribution link.
 
-Making API calls this way is **very slllllooooowwww**.
+Making API calls this way is already **very slllllooooowwww**. So only the first 300 quotes (or less) are delivered per query. You may change this by adjusting the `limitFloor` value within the `getGoodreadsQuotes` module.
 
 ### Instructions
 
