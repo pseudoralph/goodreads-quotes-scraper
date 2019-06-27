@@ -11,9 +11,9 @@ Making API calls this way is already **very slllllooooowwww**. So only the first
 - clone this repo
 - install dependencies using `npm install`
 - start express server with `node index`
-- access `/quotes` endpoint
+- access `/quotes` endpoint using `?tag=`
 
-Example: `https://localhost:3000/quotes?programming`
+Example: `http://localhost:3000/quotes?tag=programming`
 
 Only the first query is acknoledged. All others are ignored.
-`/quotes?programming` **not** `quotes?programming&humor`
+`/quotes?tag=programming` **not** `quotes?tag=programming&tag=humor`
