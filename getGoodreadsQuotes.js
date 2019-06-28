@@ -25,7 +25,18 @@ module.exports = getGoodreadsQuotes = (url, sessionData) => {
               baseUrl +
               $(element)
                 .find('a.smallText')
-                .attr('href')
+                .attr('href'),
+            likes: parseInt(
+              $(element)
+                .find('a.smallText')
+                .text()
+                .replace(/\D/g, '')
+            ),
+            tags: $(element)
+              .find('div.greyText, smallText')
+              .text()
+              .replace(/.*(tags):|\s*/gm, '')
+              .split(',')
           });
         });
         if (

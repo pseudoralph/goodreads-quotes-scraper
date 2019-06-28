@@ -6,12 +6,18 @@ const app = express();
 app.get('/quotes', (req, res) => {
   const query = req.query['tag'] || 'programming';
   const sessionData = [];
+  const start = Date.now();
 
   getGoodreadsQuotes(
     `https://www.goodreads.com/quotes/tag/${query}`,
     sessionData
   ).then(response => {
-    res.send(response);
+    res.send({
+      quotesReturned: response.length,
+      responseTime: Math.floor(Date.now() - start),
+      queryTag: query,
+      data: response
+    });
   });
 });
 

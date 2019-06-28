@@ -14,24 +14,22 @@ axios.get(url).then(response => {
     const baseUrl = 'https://www.goodreads.com';
     // const limitFloor = 30 * 10; // about 30 quotes per page
 
-    // console.log(
-    //   quoteContainers
-    //     .first()
-    //     .find('.quoteText')
-    //     .text()
-    //   // .replace(/\n\s*|“|”/gm, '')
-    // );
+    console.log(
+      quoteContainers
+        .first()
+        .find('div.greyText, smallText')
+        .text()
+    );
 
     quoteContainers.each((__, element) => {
       console.log(
         $(element)
-          .find('.authorOrTitle')
+          .find('div.greyText, smallText')
           .text()
-          .replace(/\n\s*|(,)\s*.*/gm, '')
+          .replace(/.*(tags):|\s*/gm, '')
+          .split(',')
       );
     });
-
-    // .replace(/\n\s*|“|”/gm, '')
 
     // quoteContainers.each((__, element) => {
     //   sessionData.push({
