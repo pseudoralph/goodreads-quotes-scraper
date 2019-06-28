@@ -17,3 +17,25 @@ Example: `http://localhost:3000/quotes?tag=programming`
 
 Only the first query is acknoledged. All others are ignored.
 `/quotes?tag=programming` **not** `quotes?tag=programming&tag=humor`
+
+### Response data
+
+```
+{
+    "quotesReturned": 212,
+    "responseTime": 14860,
+    "queryTag": "programming",
+    "data": [
+        {
+            "quote": "Talk is cheap. Show me the code.",
+            "author": "Linus Torvalds",
+            "url": "https://www.goodreads.com/quotes/437173-talk-is-cheap-show-me-the-code",
+            "likes": 222,
+            "tags": [
+                "humor",
+                "linux",
+                "programming"
+            ]
+        }, ...
+
+```
