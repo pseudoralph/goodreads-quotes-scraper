@@ -36,6 +36,8 @@ Only the first query is acknoledged. All others are ignored.
                 "linux",
                 "programming"
             ]
-        }, ...
+        },
+        ...
+}
 
 ```
