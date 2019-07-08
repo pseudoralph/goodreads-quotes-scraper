@@ -13,6 +13,12 @@ module.exports = getGoodreadsQuotes = (url, sessionData) => {
 
         quoteContainers.each((__, element) => {
           sessionData.push({
+            quote_id: parseInt(
+              $(element)
+                .find('a.smallText')
+                .attr('href')
+                .replace(/\D*/g, '')
+            ),
             quote: $(element)
               .find('.quoteText')
               .text()
