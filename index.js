@@ -1,7 +1,10 @@
 const getGoodreadsQuotes = require('./getGoodreadsQuotes');
-
 const express = require('express');
 const app = express();
+
+app.get('/db', (req, res) => {
+  res.send('ok');
+});
 
 app.get('/quotes', (req, res) => {
   const query = req.query['tag'] || 'programming';
